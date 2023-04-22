@@ -2,18 +2,16 @@ const SlashCommand = require("../../lib/SlashCommand");
 const { EmbedBuilder, escapeMarkdown } = require("discord.js");
 
 const command = new SlashCommand()
-  .setName("play")
-  .setDescription(
-    "Searches and plays the requested song \nSupports: \nYoutube, Spotify, Deezer, Apple Music"
-  )
-  .addStringOption((option) =>
+	.setName("playnext")
+	.setDescription("Adds a song to the queue to play next")
+	.addStringOption((option) =>
     option
       .setName("query")
       .setDescription("What am I looking for?")
       .setAutocomplete(true)
       .setRequired(true)
   )
-  .setRun(async (client, interaction, options) => {
+	.setRun(async (client, interaction, options) => {
     let channel = await client.getChannel(client, interaction);
     if (!channel) {
       return;
@@ -92,7 +90,7 @@ const command = new SlashCommand()
     }
 
     if (res.loadType === "TRACK_LOADED" || res.loadType === "SEARCH_RESULT") {
-      player.queue.add(res.tracks[0]);
+      player.queue.add(res.tracks[0], 0);
 
       if (!player.playing && !player.paused && !player.queue.size) {
         player.play();
@@ -134,7 +132,7 @@ const command = new SlashCommand()
       if (player.queue.totalSize > 1) {
         addQueueEmbed.addFields({
           name: "Position in queue",
-          value: `${player.queue.size}`,
+          value: "1",
           inline: true,
         });
       } else {
@@ -145,7 +143,7 @@ const command = new SlashCommand()
     }
 
     if (res.loadType === "PLAYLIST_LOADED") {
-      player.queue.add(res.tracks);
+      player.queue.add(res.tracks, 0);
 
       if (
         !player.playing &&

@@ -1,5 +1,5 @@
 const SlashCommand = require("../../lib/SlashCommand");
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 const command = new SlashCommand()
 	.setName("move")
@@ -32,7 +32,7 @@ const command = new SlashCommand()
 		} else {
 			return interaction.reply({
 				embeds: [
-					new MessageEmbed()
+					new EmbedBuilder()
 						.setColor("RED")
 						.setDescription("Lavalink node is not connected"),
 				],
@@ -42,7 +42,7 @@ const command = new SlashCommand()
 		if (!player) {
 			return interaction.reply({
 				embeds: [
-					new MessageEmbed()
+					new EmbedBuilder()
 						.setColor("RED")
 						.setDescription("There's nothing playing."),
 				],
@@ -65,7 +65,7 @@ const command = new SlashCommand()
 		player.queue.splice(dest, 0, thing);
 		return interaction.reply({
 			embeds: [
-				new MessageEmbed()
+				new EmbedBuilder()
 					.setColor(client.config.embedColor)
 					.setDescription(":white_check_mark: | **Moved track**"),
 			],

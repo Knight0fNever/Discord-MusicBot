@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 /**
  *
  * @param {import("../lib/DiscordMusicBot")} client
@@ -21,7 +21,7 @@ module.exports = async (client, interaction) => {
 		return;
 	}
 	if (!interaction.member.voice.channel) {
-		const joinEmbed = new MessageEmbed()
+		const joinEmbed = new EmbedBuilder()
 			.setColor(client.config.embedColor)
 			.setDescription(
 				"❌ | **You must be in a voice channel to use this action!**",
@@ -33,7 +33,7 @@ module.exports = async (client, interaction) => {
 		interaction.guild.members.me.voice.channel &&
 		!interaction.guild.members.me.voice.channel.equals(interaction.member.voice.channel)
 	) {
-		const sameEmbed = new MessageEmbed()
+		const sameEmbed = new EmbedBuilder()
 			.setColor(client.config.embedColor)
 			.setDescription(
 				"❌ | **You must be in the same voice channel as me to use this action!**",
@@ -75,7 +75,7 @@ module.exports = async (client, interaction) => {
            return interaction.reply({
                         ephemeral: true,
 			embeds: [
-				new MessageEmbed()
+				new EmbedBuilder()
 					.setColor("RED")
 					.setDescription(`There is no previous song played.`),
 			],
@@ -93,7 +93,7 @@ module.exports = async (client, interaction) => {
 			const msg = await interaction.channel.send({
                                ephemeral: true,
 				embeds: [
-					new MessageEmbed()
+					new EmbedBuilder()
 						.setColor("RED")
 						.setDescription("There is no song playing right now."),
 				],
@@ -124,7 +124,7 @@ module.exports = async (client, interaction) => {
 		return interaction.reply({
                         ephemeral: true,
 			embeds: [
-				new MessageEmbed()
+				new EmbedBuilder()
 					.setColor("RED")
 					.setDescription(`There is nothing after [${ song.title }](${ song.uri }) in the queue.`),
 			],
@@ -142,6 +142,27 @@ module.exports = async (client, interaction) => {
 			player.setTrackRepeat(true);
 		}
 		client.warn(`Player: ${player.options.guild} | Successfully toggled loop ${player.trackRepeat ? "on" : player.queueRepeat ? "queue on" : "off"} the player`);
+
+		interaction.update({
+			components: [client.createController(player.options.guild, player)],
+		});
+		return;
+	}
+
+	if (property === "Shuffle") {
+		player.queue.shuffle();
+		client.warn(`🔀 | **Successfully shuffled the queue.**`);
+
+		const msg = await interaction.channel.send({
+			embeds: [
+				client.Embed(
+					"🔀 | **Successfully shuffled the queue.**",
+				),
+			],
+		});
+		setTimeout(() => {
+			msg.delete();
+		}, 5000);
 
 		interaction.update({
 			components: [client.createController(player.options.guild, player)],

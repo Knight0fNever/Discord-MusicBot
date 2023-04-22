@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const SlashCommand = require("../../lib/SlashCommand");
 
 const command = new SlashCommand()
@@ -7,7 +7,7 @@ const command = new SlashCommand()
   .setRun(async (client, interaction, options) => {
     let msg = await interaction.channel.send({
       embeds: [
-        new MessageEmbed()
+        new EmbedBuilder()
           .setDescription("🏓 | Fetching ping...")
           .setColor("#6F8FAF"),
       ],
@@ -43,9 +43,9 @@ const command = new SlashCommand()
     msg.delete();
     interaction.reply({
       embeds: [
-        new MessageEmbed()
+        new EmbedBuilder()
           .setTitle("🏓 | Pong!")
-          .addFields(
+          .addFields([
             {
               name: "API Latency",
               value: `\`\`\`yml\n${apiState} | ${apiPing}ms\`\`\``,
@@ -56,7 +56,7 @@ const command = new SlashCommand()
               value: `\`\`\`yml\n${botState} | ${botPing}ms\`\`\``,
               inline: true,
             }
-          )
+          ])
           .setColor(client.config.embedColor)
           .setFooter({
             text: `Requested by ${interaction.user.tag}`,

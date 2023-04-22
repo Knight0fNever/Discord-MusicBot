@@ -4,7 +4,7 @@ const {
   Interaction,
   MessageActionRow,
   MessageButton,
-  MessageEmbed,
+  EmbedBuilder,
 } = require("discord.js");
 const LoadCommands = require("../../util/loadCommands");
 const { filter } = require("lodash");
@@ -41,7 +41,7 @@ const command = new SlashCommand()
     // default Page No.
     let pageNo = 0;
 
-    const helpEmbed = new MessageEmbed()
+    const helpEmbed = new EmbedBuilder()
       .setColor(client.config.embedColor)
       .setAuthor({
         name: `Commands of ${client.user.username}`,

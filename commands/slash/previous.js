@@ -1,5 +1,5 @@
 const SlashCommand = require("../../lib/SlashCommand");
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 const command = new SlashCommand()
 .setName("previous")
@@ -16,7 +16,7 @@ const command = new SlashCommand()
 	} else {
 		return interaction.reply({
 			embeds: [
-				new MessageEmbed()
+				new EmbedBuilder()
 					.setColor("RED")
 					.setDescription("Lavalink node is not connected"),
 			],
@@ -26,7 +26,7 @@ const command = new SlashCommand()
 	if (!player) {
 		return interaction.reply({
 			embeds: [
-				new MessageEmbed()
+				new EmbedBuilder()
 					.setColor("RED")
 					.setDescription("There are no previous songs for this session."),
 			],
@@ -43,7 +43,7 @@ const command = new SlashCommand()
 		|| previousSong === nextSong) {
 		return interaction.reply({
 			embeds: [
-				new MessageEmbed()
+				new EmbedBuilder()
 					.setColor("RED")
 					.setDescription("There is no previous song in the queue."),
 			],
@@ -55,7 +55,7 @@ const command = new SlashCommand()
 	}
 	interaction.reply({
 		embeds: [
-			new MessageEmbed()
+			new EmbedBuilder()
 				.setColor(client.config.embedColor)
 				.setDescription(
 					`⏮ | Previous song: **${ previousSong.title }**`,

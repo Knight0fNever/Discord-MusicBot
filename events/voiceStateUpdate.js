@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 /**
  *
@@ -75,7 +75,7 @@ module.exports = async (client, oldState, newState) => {
                          var members = stateChange.channel.members.filter(member => !member.user.bot).size
 		            if (members === 1 && player.paused && members !== player.prevMembers){
 					player.pause(false);
-					let playerResumed = new MessageEmbed()
+					let playerResumed = new EmbedBuilder()
 						.setColor(client.config.embedColor)
 						.setTitle(`Resumed!`, client.config.iconURL)
 						.setDescription(
@@ -104,7 +104,7 @@ module.exports = async (client, oldState, newState) => {
 				if (members === 0 && !player.paused && player.playing) {
 					player.pause(true);
 					
-					let playerPaused = new MessageEmbed()
+					let playerPaused = new EmbedBuilder()
 						.setColor(client.config.embedColor)
 						.setTitle(`Paused!`, client.config.iconURL)
 						.setFooter({
@@ -122,7 +122,7 @@ module.exports = async (client, oldState, newState) => {
 						setTimeout(async () => {
 							var members = stateChange.channel.members.filter(member => !member.user.bot).size
 							if (members === 0 && player.state !== 'DISCONNECTED'){
-								let leftEmbed = new MessageEmbed()
+								let leftEmbed = new EmbedBuilder()
 									.setColor(client.config.embedColor)
 									.setAuthor({
 									name: "Disconnected!",
@@ -140,7 +140,7 @@ module.exports = async (client, oldState, newState) => {
 							}
 						}, client.config.disconnectTime);
 					} else{
-						let leftEmbed = new MessageEmbed()
+						let leftEmbed = new EmbedBuilder()
 							.setColor(client.config.embedColor)
 							.setAuthor({
 							name: "Disconnected!",
@@ -160,7 +160,7 @@ module.exports = async (client, oldState, newState) => {
 				if (members === 0 && !player.paused && player.playing && twentyFourSeven) {
 					player.pause(true);
 					
-					let playerPaused = new MessageEmbed()
+					let playerPaused = new EmbedBuilder()
 						.setColor(client.config.embedColor)
 						.setTitle(`Paused!`, client.config.iconURL)
 						.setFooter({
@@ -174,7 +174,7 @@ module.exports = async (client, oldState, newState) => {
 					setTimeout(async () => {
 						var members = stateChange.channel.members.filter(member => !member.user.bot).size
 						if (members === 0 && player.state !== 'DISCONNECTED'){
-							let leftEmbed = new MessageEmbed()
+							let leftEmbed = new EmbedBuilder()
 								.setColor(client.config.embedColor)
 								.setAuthor({
 								name: "Disconnected!",
@@ -194,7 +194,7 @@ module.exports = async (client, oldState, newState) => {
 					}, client.config.disconnectTime);
 				}else{
 					if (members === 0 && player.state !== 'DISCONNECTED'){
-						let leftEmbed = new MessageEmbed()
+						let leftEmbed = new EmbedBuilder()
 						.setColor(client.config.embedColor)
 						.setAuthor({
 						name: "Disconnected!",

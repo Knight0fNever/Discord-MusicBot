@@ -21,7 +21,7 @@ module.exports = async (client, interaction) => {
         return;
     }
 
-    if (interaction.isContextMenu()) {
+    if (interaction.isContextMenuCommand()) {
         let command = client.contextCommands.find(
             (x) => x.command.name == interaction.commandName,
         );
@@ -70,6 +70,13 @@ module.exports = async (client, interaction) => {
             let choice = []
             await yt.search(url || Random, { safeSearch: false, limit: 25 }).then(result => {
                 result.forEach(x => { choice.push({ name: x.title, value: x.url }) })
+            });
+            return await interaction.respond(choice).catch(() => { });
+        } else if (interaction.commandName == "playnext") {
+            checkRegex()
+            let choice = []
+            await yt.search(url || Random, { safeSearch: false, limit: 25 }).then(result => {
+                result.forEach(x => { choice.unshift({ name: x.title, value: x.url }) })
             });
             return await interaction.respond(choice).catch(() => { });
         } else if (result.loadType === "LOAD_FAILED" || "NO_MATCHES")

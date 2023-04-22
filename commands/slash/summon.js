@@ -1,5 +1,5 @@
 const SlashCommand = require("../../lib/SlashCommand");
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 const command = new SlashCommand()
 	.setName("summon")
@@ -7,7 +7,7 @@ const command = new SlashCommand()
 	.setRun(async (client, interaction, options) => {
 		let channel = await client.getChannel(client, interaction);
 		if (!interaction.member.voice.channel) {
-			const joinEmbed = new MessageEmbed()
+			const joinEmbed = new EmbedBuilder()
 				.setColor(client.config.embedColor)
 				.setDescription(
 					"❌ | **You must be in a voice channel to use this command.**",

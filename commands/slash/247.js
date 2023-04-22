@@ -1,5 +1,5 @@
 const colors = require("colors");
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const SlashCommand = require("../../lib/SlashCommand");
 
 const command = new SlashCommand()
@@ -17,7 +17,7 @@ const command = new SlashCommand()
 		} else {
 			return interaction.reply({
 				embeds: [
-					new MessageEmbed()
+					new EmbedBuilder()
 						.setColor("RED")
 						.setDescription("Lavalink node is not connected"),
 				],
@@ -27,7 +27,7 @@ const command = new SlashCommand()
 		if (!player) {
 			return interaction.reply({
 				embeds: [
-					new MessageEmbed()
+					new EmbedBuilder()
 						.setColor("RED")
 						.setDescription("There's nothing to play 24/7."),
 				],
@@ -35,7 +35,7 @@ const command = new SlashCommand()
 			});
 		}
 		
-		let twentyFourSevenEmbed = new MessageEmbed().setColor(
+		let twentyFourSevenEmbed = new EmbedBuilder().setColor(
 			client.config.embedColor,
 		);
 		const twentyFourSeven = player.get("twentyFourSeven");

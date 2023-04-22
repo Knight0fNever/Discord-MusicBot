@@ -1,7 +1,7 @@
 const SlashCommand = require("../../lib/SlashCommand");
 const moment = require("moment");
 require("moment-duration-format");
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const os = require("os");
 
 const command = new SlashCommand()
@@ -51,7 +51,7 @@ const command = new SlashCommand()
 			gitHash = "unknown";
 		}
 		
-		const statsEmbed = new MessageEmbed()
+		const statsEmbed = new EmbedBuilder()
 			.setTitle(`${ client.user.username } Information`)
 			.setColor(client.config.embedColor)
 			.setDescription(

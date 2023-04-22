@@ -1,6 +1,5 @@
 const { ContextMenuCommandBuilder } = require("@discordjs/builders");
-const { MessageEmbed } = require("discord.js");
-const escapeMarkdown = require("discord.js").Util.escapeMarkdown;
+const { EmbedBuilder, escapeMarkdown } = require("discord.js");
 
 module.exports = {
   command: new ContextMenuCommandBuilder().setName("Play Song").setType(3),
@@ -43,7 +42,7 @@ module.exports = {
 
     const ret = await interaction.reply({
       embeds: [
-        new MessageEmbed()
+        new EmbedBuilder()
           .setColor(client.config.embedColor)
           .setDescription(":mag_right: **Searching...**"),
       ],
@@ -67,7 +66,7 @@ module.exports = {
       await interaction
         .editReply({
           embeds: [
-            new MessageEmbed()
+            new EmbedBuilder()
               .setColor("RED")
               .setDescription("There was an error while searching"),
           ],
@@ -82,7 +81,7 @@ module.exports = {
       await interaction
         .editReply({
           embeds: [
-            new MessageEmbed()
+            new EmbedBuilder()
               .setColor("RED")
               .setDescription("No results were found"),
           ],
@@ -99,12 +98,12 @@ module.exports = {
       var title = escapeMarkdown(res.tracks[0].title);
       var title = title.replace(/\]/g, "");
       var title = title.replace(/\[/g, "");
-      let addQueueEmbed = new MessageEmbed()
+      let addQueueEmbed = new EmbedBuilder()
         .setColor(client.config.embedColor)
         .setAuthor({ name: "Added to queue", iconURL: client.config.iconURL })
         .setDescription(`[${title}](${res.tracks[0].uri})` || "No Title")
         .setURL(res.tracks[0].uri)
-        .addFields(
+        .addFields([
           {
             name: "Added by",
             value: `<@${interaction.user.id}>`,
@@ -120,7 +119,7 @@ module.exports = {
                 })}\``,
             inline: true,
           }
-        );
+        ]);
 
       try {
         addQueueEmbed.setThumbnail(
@@ -154,7 +153,7 @@ module.exports = {
         player.play();
       }
 
-      let playlistEmbed = new MessageEmbed()
+      let playlistEmbed = new EmbedBuilder()
         .setColor(client.config.embedColor)
         .setAuthor({
           name: "Playlist added to queue",
@@ -162,7 +161,7 @@ module.exports = {
         })
         .setThumbnail(res.tracks[0].thumbnail)
         .setDescription(`[${res.playlist.name}](${query})`)
-        .addFields(
+        .addFields([
           {
             name: "Enqueued",
             value: `\`${res.tracks.length}\` songs`,
@@ -176,7 +175,7 @@ module.exports = {
             })}\``,
             inline: true,
           }
-        );
+        ]);
 
       await interaction.editReply({ embeds: [playlistEmbed] }).catch(this.warn);
     }

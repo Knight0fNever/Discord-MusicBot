@@ -1,7 +1,7 @@
 const SlashCommand = require("../../lib/SlashCommand");
 const prettyMilliseconds = require("pretty-ms");
 const {
-  MessageEmbed,
+  EmbedBuilder,
   MessageActionRow,
   MessageSelectMenu,
 } = require("discord.js");
@@ -27,13 +27,13 @@ const command = new SlashCommand()
     } else {
       return interaction.reply({
         embeds: [
-          new MessageEmbed()
+          new EmbedBuilder()
             .setColor("RED")
             .setDescription("Lavalink node is not connected"),
         ],
       });
     }
-    await interaction.deferReply().catch((_) => {});
+    await interaction.deferReply().catch((_) => { });
 
     if (player.state !== "CONNECTED") {
       player.connect();
@@ -47,7 +47,7 @@ const command = new SlashCommand()
       if (res.loadType === "LOAD_FAILED") {
         return interaction.reply({
           embeds: [
-            new MessageEmbed()
+            new EmbedBuilder()
               .setDescription("An error occured while searching for the song")
               .setColor("RED"),
           ],
@@ -57,7 +57,7 @@ const command = new SlashCommand()
     } catch (err) {
       return interaction.reply({
         embeds: [
-          new MessageEmbed()
+          new EmbedBuilder()
             .setAuthor({
               name: "An error occured while searching for the song",
             })
@@ -70,7 +70,7 @@ const command = new SlashCommand()
     if (res.loadType == "NO_MATCHES") {
       return interaction.reply({
         embeds: [
-          new MessageEmbed()
+          new EmbedBuilder()
             .setDescription(`No results found for \`${search}\``)
             .setColor("RED"),
         ],
@@ -91,8 +91,8 @@ const command = new SlashCommand()
           description: track.isStream
             ? `LIVE`
             : `${prettyMilliseconds(track.duration, {
-                secondsDecimalDigits: 0,
-              })} - ${track.author}`,
+              secondsDecimalDigits: 0,
+            })} - ${track.author}`,
         });
       });
 
@@ -105,7 +105,7 @@ const command = new SlashCommand()
 
       let choosenTracks = await interaction.editReply({
         embeds: [
-          new MessageEmbed()
+          new EmbedBuilder()
             .setColor(client.config.embedColor)
             .setDescription(
               `Here are some of the results I found for \`${search}\`. Please select track within \`30 seconds\``
@@ -136,7 +136,7 @@ const command = new SlashCommand()
           i.editReply({
             content: null,
             embeds: [
-              new MessageEmbed()
+              new EmbedBuilder()
                 .setAuthor({
                   name: "Added to queue",
                   iconURL: client.config.iconURL,
@@ -145,9 +145,9 @@ const command = new SlashCommand()
                 .setThumbnail(res.tracks[0].displayThumbnail("maxresdefault"))
                 .setDescription(
                   `[${trackForPlay?.tracks[0]?.title}](${trackForPlay?.tracks[0].uri})` ||
-                    "No Title"
+                  "No Title"
                 )
-                .addFields(
+                .addFields([
                   {
                     name: "Added by",
                     value: `<@${interaction.user.id}>`,
@@ -158,11 +158,11 @@ const command = new SlashCommand()
                     value: res.tracks[0].isStream
                       ? `\`LIVE :red_circle:\``
                       : `\`${client.ms(res.tracks[0].duration, {
-                          colonNotation: true,
-                        })}\``,
+                        colonNotation: true,
+                      })}\``,
                     inline: true,
                   }
-                )
+                ])
                 .setColor(client.config.embedColor),
             ],
             components: [],
@@ -174,7 +174,7 @@ const command = new SlashCommand()
           choosenTracks.edit({
             content: null,
             embeds: [
-              new MessageEmbed()
+              new EmbedBuilder()
                 .setDescription(
                   `No track selected. You took too long to select a track.`
                 )

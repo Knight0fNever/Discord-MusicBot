@@ -1,6 +1,6 @@
 {
-  "name": "discord-musicbot",
-  "version": "5.0.0-beta",
+  "name": "apollo-redux",
+  "version": "0.1.0-beta",
   "description": "Very simple discord music bot with the discord.js with Song Name playing. It can able to play music with the song name",
   "main": "index.js",
   "scripts": {
@@ -15,10 +15,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SudhanPlayz/Discord-MusicBot.git"
+    "url": "git+https://github.com/Knight0fNever/Discord-MusicBot.git"
   },
   "engines": {
-    "node": ">=16.x <=16.16"
+    "node": ">=16.9.x"
   },
   "keywords": [
     "discord",
@@ -29,26 +29,25 @@
   ],
   "authors": [
     "SudhanPlayz",
-    "DarrenOfficial"
+    "DarrenOfficial",
+    "Knight0fNever"
   ],
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/SudhanPlayz/Discord-MusicBot/issues"
+    "url": "https://github.com/Knight0fNever/Discord-MusicBot/issues"
   },
-  "homepage": "https://github.com/SudhanPlayz/Discord-MusicBot#readme",
+  "homepage": "https://github.com/Knight0fNever/Discord-MusicBot#readme",
   "dependencies": {
-    "@discordjs/builders": "^1.4.0",
-    "@discordjs/rest": "^1.5.0",
+    "@discordjs/builders": "^1.6.1",
     "axios": "^0.27.0",
     "better-erela.js-apple": "^0.1.0",
-    "better-erela.js-spotify": "1.3.9",
+    "better-erela.js-spotify": "1.3.11",
     "colors": "1.3.3",
-    "discord-api-types": "0.37.1",
-    "discord-together": "^1.3.25",
-    "discord.js": "^13.14.0",
-    "dotenv": "^16.0.1",
+    "discord-together": "^1.3.31",
+    "discord.js": "^14.9.0",
+    "dotenv": "^16.0.3",
     "ejs": "^3.1.6",
-    "erela.js": "^2.3.3",
+    "erela.js": "^2.4.0",
     "erela.js-deezer": "^1.0.7",
     "erela.js-facebook": "^1.0.4",
     "erela.js-filters": "^1.2.6",

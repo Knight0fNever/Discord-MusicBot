@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const SlashCommand = require("../../lib/SlashCommand");
 
 const command = new SlashCommand()
@@ -38,7 +38,7 @@ const command = new SlashCommand()
 		} else {
 			return interaction.reply({
 				embeds: [
-					new MessageEmbed()
+					new EmbedBuilder()
 						.setColor("RED")
 						.setDescription("Lavalink node is not connected"),
 				],
@@ -48,7 +48,7 @@ const command = new SlashCommand()
 		if (!player) {
 			return interaction.reply({
 				embeds: [
-					new MessageEmbed()
+					new EmbedBuilder()
 						.setColor("RED")
 						.setDescription("There's no music playing."),
 				],
@@ -57,7 +57,7 @@ const command = new SlashCommand()
 		}
 		
 		// create a new embed
-		let filtersEmbed = new MessageEmbed().setColor(client.config.embedColor);
+		let filtersEmbed = new EmbedBuilder().setColor(client.config.embedColor);
 		
 		if (args == "nightcore") {
 			filtersEmbed.setDescription("✅ | Nightcore filter is now active!");

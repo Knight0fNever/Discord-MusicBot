@@ -1,4 +1,4 @@
-const { MessageEmbed, message } = require("discord.js");
+const { EmbedBuilder, message } = require("discord.js");
 const SlashCommand = require("../../lib/SlashCommand");
 const fs = require("fs");
 const path = require("path");
@@ -51,7 +51,7 @@ const command = new SlashCommand()
 				client.log(`Reloaded ${ totalCmds } commands!`);
 				return interaction.reply({
 					embeds: [
-						new MessageEmbed()
+						new EmbedBuilder()
 							.setColor(client.config.embedColor)
 							.setDescription(`Sucessfully Reloaded \`${ totalCmds }\` Commands!`)
 							.setFooter({
@@ -65,7 +65,7 @@ const command = new SlashCommand()
 				console.log(err);
 				return interaction.reply({
 					embeds: [
-						new MessageEmbed()
+						new EmbedBuilder()
 							.setColor(client.config.embedColor)
 							.setDescription(
 								"An error has occured. For more details please check console.",
@@ -77,7 +77,7 @@ const command = new SlashCommand()
 		} else {
 			return interaction.reply({
 				embeds: [
-					new MessageEmbed()
+					new EmbedBuilder()
 						.setColor(client.config.embedColor)
 						.setDescription("You are not authorized to use this command!"),
 				],
