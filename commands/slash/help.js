@@ -2,9 +2,10 @@ const SlashCommand = require("../../lib/SlashCommand");
 const {
   Client,
   Interaction,
-  MessageActionRow,
-  MessageButton,
+  ActionRowBuilder,
+  ButtonBuilder,
   EmbedBuilder,
+  ComponentType
 } = require("discord.js");
 const LoadCommands = require("../../util/loadCommands");
 const { filter } = require("lodash");
@@ -41,7 +42,7 @@ const command = new SlashCommand()
     // default Page No.
     let pageNo = 0;
 
-    const helpEmbed = new EmbedBuilder()
+    let helpEmbed = new EmbedBuilder()
       .setColor(client.config.embedColor)
       .setAuthor({
         name: `Commands of ${client.user.username}`,
@@ -57,30 +58,30 @@ const command = new SlashCommand()
     );
 
     tempArray.forEach((cmd) => {
-      helpEmbed.addFields({ name: cmd.name, value: cmd.description });
+      helpEmbed.addFields([{ name: cmd.name, value: cmd.description }]);
     });
-    helpEmbed.addFields({
+    helpEmbed.addFields([{
       name: "Credits",
       value:
         `Discord Music Bot Version: v${
           require("../../package.json").version
         }; Build: ${gitHash}` +
         "\n" +
-        `[✨ Support Server](${client.config.supportServer}) | [Issues](${client.config.Issues}) | [Source](https://github.com/SudhanPlayz/Discord-MusicBot/tree/v5) | [Invite Me](https://discord.com/oauth2/authorize?client_id=${client.config.clientId}&permissions=${client.config.permissions}&scope=bot%20applications.commands)`,
-    });
+        `[Issues](${client.config.Issues}) | [Source](https://github.com/SudhanPlayz/Discord-MusicBot/tree/v5)`,
+    }]);
 
     // Construction of the buttons for the embed
     const getButtons = (pageNo) => {
-      return new MessageActionRow().addComponents(
-        new MessageButton()
+      return new ActionRowBuilder().addComponents(
+        new ButtonBuilder()
           .setCustomId("help_cmd_but_2_app")
           .setEmoji("◀️")
-          .setStyle("PRIMARY")
+          .setStyle("Primary")
           .setDisabled(pageNo == 0),
-        new MessageButton()
+        new ButtonBuilder()
           .setCustomId("help_cmd_but_1_app")
           .setEmoji("▶️")
-          .setStyle("PRIMARY")
+          .setStyle("Primary")
           .setDisabled(pageNo == maxPages - 1)
       );
     };
@@ -92,17 +93,19 @@ const command = new SlashCommand()
     });
     const collector = tempMsg.createMessageComponentCollector({
       time: 600000,
-      componentType: "BUTTON",
+      componentType: ComponentType.Button,
     });
 
     collector.on("collect", async (iter) => {
+      // console.log(iter);
       if (iter.customId === "help_cmd_but_1_app") {
         pageNo++;
       } else if (iter.customId === "help_cmd_but_2_app") {
         pageNo--;
       }
 
-      helpEmbed.fields = [];
+      helpEmbed.spliceFields(0, client.config.helpCmdPerPage + 1);
+      console.log(helpEmbed.data);
 
       var tempArray = filteredCommands.slice(
         pageNo * client.config.helpCmdPerPage,
@@ -110,20 +113,20 @@ const command = new SlashCommand()
       );
 
       tempArray.forEach((cmd) => {
-        //console.log(cmd);
+        // console.log(cmd);
         helpEmbed
-          .addFields({ name: cmd.name, value: cmd.description })
+          .addFields([{ name: cmd.name, value: cmd.description }])
           .setFooter({ text: `Page ${pageNo + 1} / ${maxPages}` });
       });
-      helpEmbed.addFields({
+      helpEmbed.addFields([{
         name: "Credits",
         value:
           `Discord Music Bot Version: v${
             require("../../package.json").version
           }; Build: ${gitHash}` +
           "\n" +
-          `[✨ Support Server](${client.config.supportServer}) | [Issues](${client.config.Issues}) | [Source](https://github.com/SudhanPlayz/Discord-MusicBot/tree/v5) | [Invite Me](https://discord.com/oauth2/authorize?client_id=${client.config.clientId}&permissions=${client.config.permissions}&scope=bot%20applications.commands)`,
-      });
+          `[Issues](${client.config.Issues}) | [Source](https://github.com/Knight0fNever/Discord-MusicBot/tree/v5)`,
+      }]);
       await iter.update({
         embeds: [helpEmbed],
         components: [getButtons(pageNo)],
