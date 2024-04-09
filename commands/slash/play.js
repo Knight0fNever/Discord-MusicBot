@@ -69,7 +69,7 @@ const command = new SlashCommand()
         .editReply({
           embeds: [
             new EmbedBuilder()
-              .setColor("RED")
+              .setColor("#FF0000")
               .setDescription("There was an error while searching"),
           ],
         })
@@ -84,7 +84,7 @@ const command = new SlashCommand()
         .editReply({
           embeds: [
             new EmbedBuilder()
-              .setColor("RED")
+              .setColor("#FF0000")
               .setDescription("No results were found"),
           ],
         })
